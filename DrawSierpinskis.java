@@ -38,7 +38,8 @@ public class DrawSierpinskis extends MouseAdapter implements Runnable {
 	/**
 	 * Constructor that includes option to draw only triangles.
 	 * 
-	 * @param trianglesOnly true if only drawing triangles, false if drawing Sierpinski gaskets.
+	 * @param trianglesOnly true if only drawing triangles, false if drawing
+	 *                      Sierpinski gaskets.
 	 */
 	public DrawSierpinskis(boolean trianglesOnly) {
 
@@ -195,6 +196,18 @@ class Sierpinski {
 	 */
 	protected static void drawSierpinski(Point corner1, Point corner2,
 			Point corner3, Graphics g) {
+
+			// Logic:
+			//find side lengths
+			//find shortest side
+
+			//if shortest side < min length
+    		//make polygon
+    		//add 3 corner points
+    		//draw polygon
+			//else
+    		//find 3 midpoints
+    		//recursively draw top/left/right smaller triangles
 		
 	}
 
@@ -210,6 +223,8 @@ class Sierpinski {
 			g.drawLine(corners[0].x, corners[0].y, corners[1].x, corners[1].y);
 			g.drawLine(corners[1].x, corners[1].y, corners[2].x, corners[2].y);
 			g.drawLine(corners[2].x, corners[2].y, corners[0].x, corners[0].y);
+		} else {
+			drawSierpinski(corners[0], corners[1], corners[2], g);
 		}
 	}
 
