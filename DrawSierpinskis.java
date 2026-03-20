@@ -197,18 +197,32 @@ class Sierpinski {
 	protected static void drawSierpinski(Point corner1, Point corner2,
 			Point corner3, Graphics g) {
 
-			// Logic:
-			//find side lengths
-			//find shortest side
+		// Find side lengths:
+		double sideA = corner1.distance(corner2);
+		double sideB = corner2.distance(corner3);
+		double sideC = corner3.distance(corner1);
+		// Find shortest side:
+		double shortest = Math.min(sideA, Math.min(sideB, sideC));
 
-			//if shortest side < min length
-    		//make polygon
-    		//add 3 corner points
-    		//draw polygon
-			//else
-    		//find 3 midpoints
-    		//recursively draw top/left/right smaller triangles
-		
+		if (shortest < MIN_SIZE) {
+			// Make polygon object:
+			Polygon triangle = new Polygon();
+			// Add 3 corner points:
+			triangle.addPoint(corner1.x, corner1.y);
+			triangle.addPoint(corner2.x, corner2.y);
+			triangle.addPoint(corner3.x, corner3.y);
+			// Draw polygon:
+			g.drawPolygon(triangle);
+		} else {
+			// Find 3 midpoints:
+			Point midA = new Point((corner1.x + corner2.x) / 2, (corner1.y + corner2.y) / 2);
+			Point midB = new Point((corner2.x + corner3.x) / 2, (corner2.y + corner3.y) / 2);
+			Point midC = new Point((corner3.x + corner1.x) / 2, (corner3.y + corner1.y) / 2);
+			// Recursively draw top/left/right smaller triangles:
+			drawSierpinski(corner1, midA, midC, g);
+			drawSierpinski(corner2, midA, midB, g);
+			drawSierpinski(corner3, midB, midC, g);
+		}
 	}
 
 	/**
