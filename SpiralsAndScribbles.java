@@ -9,6 +9,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+
+import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -39,8 +41,14 @@ public class SpiralsAndScribbles extends MouseAdapter implements Runnable, Actio
     /** The JPanel on which the shapes are drawn. */
     private JPanel panel;
 
-    /** The JComboBox for selecting what to draw: spirals or scribbles */
+    /** The JComboBox for selecting what to draw: spirals or scribbles. */
     private JComboBox drawWhat;
+
+    /**The JCheckBox for clearing the GUI window. */
+    private JCheckBox clearOnExit;
+
+    /** The JComboBox for selecting the color.  */
+    private JComboBox colorMode;
 
     /** 
      * This method is called by the paintComponent method of
@@ -94,6 +102,15 @@ public class SpiralsAndScribbles extends MouseAdapter implements Runnable, Actio
         drawWhat.addItem("Scribbles");
         drawWhat.setSelectedItem("Scribbles");
         controlPanel.add(drawWhat);
+
+        clearOnExit = new JCheckBox();
+        clearOnExit.setSelected(false);
+        controlPanel.add(clearOnExit);
+
+        String[] colorOptions = {"Black", "Colorful", "More Colorful", "Crazy Colorful"};
+        colorMode = new JComboBox<>(colorOptions);
+        colorMode.setSelectedIndex(0);
+        controlPanel.add(colorMode);
 
         outerPanel.add(controlPanel, BorderLayout.SOUTH);
 
@@ -157,6 +174,10 @@ public class SpiralsAndScribbles extends MouseAdapter implements Runnable, Actio
      */
     @Override
     public void mouseExited(MouseEvent e) {
+        if (clearOnExit.isSelected()) {
+            items.clear();
+            panel.repaint();
+        }
    }
 
     /**
