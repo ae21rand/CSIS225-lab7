@@ -175,7 +175,24 @@ public class SpiralsAndScribbles extends MouseAdapter implements Runnable, Actio
     @Override
     public void mousePressed(MouseEvent e) {
 
+        Object mode = colorMode.getSelectedItem();
+        if (mode == "Colorful" || mode == "More Colorful") {
+            for (ShapesOfScenes obj : items) {
+                if (obj.nearTo(e.getPoint())) {
+                    randomColor(mode.equals("More Colorful"));
+                    pressPoint = null;
+                    panel.repaint();
+                    return;
+                }
+            }
+        }
+
         pressPoint = e.getPoint();
+        if (mode == "Colorful") {
+            currentColor = randomColor();
+        } else if (mode == "Black") {
+            currentColor = Color.BLACK;
+        }
         current = new ShapesOfScenes();
         items.add(current);
     }
@@ -188,6 +205,10 @@ public class SpiralsAndScribbles extends MouseAdapter implements Runnable, Actio
      */
     @Override
     public void mouseMoved(MouseEvent e) {
+
+        if (colorMode.getSelectedItem() == "Crazy Colorful") {
+            recolorAll();
+        }
         panel.repaint();
     }
 
@@ -205,6 +226,11 @@ public class SpiralsAndScribbles extends MouseAdapter implements Runnable, Actio
         if (pressPoint == null) {
             return;
         }
+
+        if (colorMode.getSelectedItem() == "More Colorful") {
+            currentColor = randomColor();
+        }
+
         Point p[] = new Point[2];
         p[0] = pressPoint;
         p[1] = e.getPoint();
